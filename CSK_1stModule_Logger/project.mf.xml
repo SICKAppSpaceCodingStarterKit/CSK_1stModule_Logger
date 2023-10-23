@@ -16,6 +16,9 @@ INFO: If using the "FileSink" feature, a SD card should be used to reduce write 
                 <item desc="Log infos, warnings and severe errors." name="INFO">INFO</item>
                 <item desc="Log only severe errors." name="SEVERE">SEVERE</item>
                 <item desc="Log warnings and severe errors." name="WARNING">WARNING</item>
+                <item desc="Log finest, finer, fine, infos, warnings and severe errors." name="FINEST">FINEST</item>
+                <item desc="Log finer, fine, infos, warnings and severe errors." name="FINER">FINER</item>
+                <item desc="Log fine, infos, warnings and severe errors." name="FINE">FINE</item>
             </enum>
             <serves>
                 <event name="OnNewMessage">
@@ -152,7 +155,7 @@ INFO: If using the "FileSink" feature, a SD card should be used to reduce write 
             </serves>
         </crown>
         <meta key="author">SICK AG</meta>
-        <meta key="version">4.0.0</meta>
+        <meta key="version">4.1.0</meta>
         <meta key="priority">low</meta>
         <meta key="copy-protected">false</meta>
         <meta key="read-protected">false</meta>
