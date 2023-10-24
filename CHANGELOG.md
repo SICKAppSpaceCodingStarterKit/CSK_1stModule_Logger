@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## Release 4.1.0
+
+### Improvements
+- Added log level 'FINE', 'FINER', 'FINEST'
+
 ## Release 4.0.0
 
 ### Improvements
