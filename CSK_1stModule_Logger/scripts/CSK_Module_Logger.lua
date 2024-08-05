@@ -38,6 +38,10 @@ _G.availableAPIs = require('Communication/Logger/helper/checkAPIs') -- can be us
 _G.loggerModel = require('Communication/Logger/Logger_Model')
 _G.logger = _G.loggerModel.sharedLogger
 
+if _G.availableAPIs.default == false then
+  _G.logger:warning("CSK_Logger: Relevant CROWN(s) not available on device. Module is not supported...")
+end
+
 --**************************************************************************
 --**********************End Global Scope ***********************************
 --**************************************************************************
@@ -56,6 +60,7 @@ local function handleOnStarted()
 
   _G.logger:info('App started.')
   CSK_Logger.pageCalled() -- Update UI after bootup
+
 end
 Script.register("Engine.OnStarted", handleOnStarted)
 

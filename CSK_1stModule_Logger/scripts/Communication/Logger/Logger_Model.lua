@@ -30,6 +30,8 @@ logger_Model.helperFuncs = require('Communication/Logger/helper/funcs')
 logger_Model.sharedLogger = Log.SharedLogger.create('ModuleLogger') -- Shared Logger used by all CSK modules
 logger_Model.tempLog = {} -- This will hold temporarely the latest 200 messages to show on UI if Log is not saved in a file
 logger_Model.logger = Log.Handler.create() -- Main logger handle
+logger_Model.styleForUI = 'None' -- Optional parameter to set UI style
+logger_Model.version = Engine.getCurrentAppVersion() -- Version of module
 
 -- Parameters to be saved permanently if wanted
 logger_Model.parameters = {}
@@ -39,7 +41,7 @@ logger_Model.parameters.fileName = 'CSK_Logfile.txt' -- Name of the logfile
 
 --> INFO: File / path on SD card should be used to reduce write accesses on the internal flash storage of the device
 
-logger_Model.parameters.level = 'ALL' -- Log level to react on
+logger_Model.parameters.level = 'INFO' -- Log level to react on
 logger_Model.parameters.setConsoleSinkEnabled = true -- Log also console messages
 logger_Model.parameters.attachToEngineLogger = false -- Attach logger to internal engine logger messages
 logger_Model.parameters.fileSinkActive = false -- Store logs in a file
@@ -56,6 +58,13 @@ logger_Model.parameterLoadOnReboot = false -- Status if parameter dataset should
 --**************************************************************************
 --**********************Start Function Scope *******************************
 --**************************************************************************
+
+--- Function to react on UI style change
+local function handleOnStyleChanged(theme)
+  logger_Model.styleForUI = theme
+  Script.notifyEvent("Logger_OnNewStatusCSKStyle", logger_Model.styleForUI)
+end
+Script.register('CSK_PersistentData.OnNewStatusCSKStyle', handleOnStyleChanged)
 
 --- Function to load logfile out of file and notify via event to send e.g. to UI
 local function loadFileLog()
