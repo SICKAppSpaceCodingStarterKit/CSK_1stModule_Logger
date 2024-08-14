@@ -2,7 +2,7 @@
 
 Module to provide logger functionality to log messages of all modules.  
 
-![](https://github.com/SICKAppSpaceCodingStarterKit/CSK_1stModule_Logger/blob/main/docu/media/UI_Screenshot.png)
+![](./docu/media/UI_Screenshot.png)
 
 ## How to Run
 
