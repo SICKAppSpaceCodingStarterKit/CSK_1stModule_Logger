@@ -308,7 +308,7 @@
                                                 </layout-column>
                                                 <layout-column id="ColumnLayout13" style="align-items: stretch">
                                                     <davinci-text-field id="TF_Filename" type="text"
-                                                        title="Name of the log file to store log mesasgs.">
+                                                        title="Name of the log file to store log messages.">
                                                         <crown-edpws-binding property="value" name="CSK_Logger/OnNewFilename"
                                                             update-on-resume>
                                                         </crown-edpws-binding>
@@ -346,8 +346,8 @@
                                                         expanded-title="Hide" style="align-self: center">
                                                         <davinci-callout id="Callout3" type="info">
                                                             <span>
-		        											If using the 'file sink' feature, a SD card should be used to reduce write accesses on the internal flash storage of the device.
-		        											</span>
+                                                            If using the 'file sink' feature, a SD card should be used to reduce write accesses on the internal flash storage of the device.
+                                                            </span>
                                                         </davinci-callout>
                                                     </davinci-collapse>
                                                 </layout-column>
@@ -376,7 +376,7 @@
                                             style="justify-content: flex-end">
                                             <appspace-file-download-button id="FDB_DownloadFile" type="outline"
                                                 icon-position="append" downloaded-filename="file.tmp"
-                                                title="Download Logfile from device to the pc." icon="file/file_download">
+                                                title="Download Logfile from device to the PC." icon="file/file_download">
                                                 <crown-on property="downloaded-filename" crown-event="CSK_Logger/OnNewFilename">
                                                 </crown-on>
                                                 <span>Download Logfile</span>

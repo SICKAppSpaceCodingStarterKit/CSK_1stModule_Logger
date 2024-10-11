@@ -41,7 +41,7 @@ logger_Model.parameters.fileName = 'CSK_Logfile.txt' -- Name of the logfile
 
 --> INFO: File / path on SD card should be used to reduce write accesses on the internal flash storage of the device
 
-logger_Model.parameters.level = 'INFO' -- Log level to react on
+logger_Model.parameters.level = 'ALL' -- Log level to react on
 logger_Model.parameters.setConsoleSinkEnabled = true -- Log also console messages
 logger_Model.parameters.attachToEngineLogger = false -- Attach logger to internal engine logger messages
 logger_Model.parameters.fileSinkActive = false -- Store logs in a file
