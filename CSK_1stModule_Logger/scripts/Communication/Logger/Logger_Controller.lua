@@ -21,6 +21,10 @@ local logger_Model -- Reference to global handle
 
 -- ************************ UI Events Start ********************************
 
+Script.serveEvent('CSK_Logger.OnNewStatusCSKStyle', 'Logger_OnNewStatusCSKStyle')
+Script.serveEvent('CSK_Logger.OnNewStatusModuleVersion', 'Logger_OnNewStatusModuleVersion')
+Script.serveEvent('CSK_Logger.OnNewStatusModuleIsActive', 'Logger_OnNewStatusModuleIsActive')
+
 Script.serveEvent("CSK_Logger.OnNewMessage", "Logger_OnNewMessage")
 Script.serveEvent("CSK_Logger.OnNewCompleteLogfile", "Logger_OnNewCompleteLogfile")
 Script.serveEvent("CSK_Logger.OnNewFilepath", "Logger_OnNewFilepath")
@@ -107,6 +111,10 @@ end
 --- Function to send all relevant values to UI on resume
 local function handleOnExpiredTmrLogger()
 
+  Script.notifyEvent("Logger_OnNewStatusModuleVersion", 'v' .. logger_Model.version)
+  Script.notifyEvent("Logger_OnNewStatusCSKStyle", logger_Model.styleForUI)
+  Script.notifyEvent("Logger_OnNewStatusModuleIsActive", _G.availableAPIs.default)
+
   updateUserLevel()
 
   if logger_Model.parameters.callBackSink and not logger_Model.parameters.fileSinkActive then
@@ -148,7 +156,7 @@ end
 Script.register("CSK_Logger.OnNewMessage", handleOnNewMessage)
 
 local function setFilePath(path)
-  _G.logger:info(nameOfModule .. ': Set file path to ' .. path)
+  _G.logger:fine(nameOfModule .. ': Set file path to ' .. path)
   logger_Model.parameters.filePath = path
   logger_Model.setupLogHandler()
   handleOnExpiredTmrLogger()
@@ -156,7 +164,7 @@ end
 Script.serveFunction("CSK_Logger.setFilePath", setFilePath)
 
 local function setFileName(name)
-  _G.logger:info(nameOfModule .. ': Set filename to ' .. name)
+  _G.logger:fine(nameOfModule .. ': Set filename to ' .. name)
   logger_Model.parameters.fileName = name
   logger_Model.setupLogHandler()
   handleOnExpiredTmrLogger()
@@ -164,7 +172,7 @@ end
 Script.serveFunction("CSK_Logger.setFileName", setFileName)
 
 local function setLogLevel(level)
-  _G.logger:info(nameOfModule .. ': Set log level to ' .. level)
+  _G.logger:fine(nameOfModule .. ': Set log level to ' .. level)
   logger_Model.parameters.level = level
   logger_Model.setupLogHandler()
   handleOnExpiredTmrLogger()
@@ -172,7 +180,7 @@ end
 Script.serveFunction("CSK_Logger.setLogLevel", setLogLevel)
 
 local function setConsoleSinkEnabled(status)
-  _G.logger:info(nameOfModule .. ': Set "console sink" status to ' .. tostring(status))
+  _G.logger:fine(nameOfModule .. ': Set "console sink" status to ' .. tostring(status))
   logger_Model.parameters.setConsoleSinkEnabled = status
   logger_Model.setupLogHandler()
   handleOnExpiredTmrLogger()
@@ -180,7 +188,7 @@ end
 Script.serveFunction("CSK_Logger.setConsoleSinkEnabled", setConsoleSinkEnabled)
 
 local function setAttachToEngineLogger(status)
-  _G.logger:info(nameOfModule .. ': Attach to engine logger status = ' .. tostring(status))
+  _G.logger:fine(nameOfModule .. ': Attach to engine logger status = ' .. tostring(status))
   logger_Model.parameters.attachToEngineLogger = status
   logger_Model.setupLogHandler()
   handleOnExpiredTmrLogger()
@@ -188,7 +196,7 @@ end
 Script.serveFunction("CSK_Logger.setAttachToEngineLogger", setAttachToEngineLogger)
 
 local function setFileSinkActive(status)
-  _G.logger:info(nameOfModule .. ': File Sink status = ' .. tostring(status))
+  _G.logger:fine(nameOfModule .. ': File Sink status = ' .. tostring(status))
   logger_Model.parameters.fileSinkActive = status
   logger_Model.setupLogHandler()
   handleOnExpiredTmrLogger()
@@ -196,7 +204,7 @@ end
 Script.serveFunction("CSK_Logger.setFileSinkActive", setFileSinkActive)
 
 local function setLogFileSize(size)
-  _G.logger:info(nameOfModule .. ': Set logfile size to ' .. tostring(size) .. ' bytes.')
+  _G.logger:fine(nameOfModule .. ': Set logfile size to ' .. tostring(size) .. ' bytes.')
   logger_Model.parameters.logSize = size
   logger_Model.setupLogHandler()
   handleOnExpiredTmrLogger()
@@ -204,7 +212,7 @@ end
 Script.serveFunction('CSK_Logger.setLogFileSize', setLogFileSize)
 
 local function setCallbackSinkActive(status)
-  _G.logger:info(nameOfModule .. ': Set status of callBackSink to ' .. tostring(status))
+  _G.logger:fine(nameOfModule .. ': Set status of callBackSink to ' .. tostring(status))
   logger_Model.parameters.callBackSink = status
   logger_Model.setupLogHandler()
   handleOnExpiredTmrLogger()
@@ -216,22 +224,34 @@ local function reloadLogsInUI()
 end
 Script.serveFunction('CSK_Logger.reloadLogsInUI', reloadLogsInUI)
 
+local function getStatusModuleActive()
+  return _G.availableAPIs.default
+end
+Script.serveFunction('CSK_Logger.getStatusModuleActive', getStatusModuleActive)
+
+local function getParameters()
+  return logger_Model.helperFuncs.json.encode(logger_Model.parameters)
+end
+Script.serveFunction('CSK_Logger.getParameters', getParameters)
+
 -- *****************************************************************
 -- Following function can be adapted for CSK_PersistentData module usage
 -- *****************************************************************
 
 local function setParameterName(name)
-  _G.logger:info(nameOfModule .. ': Set PersisetentData parameter name to ' .. name)
+  _G.logger:fine(nameOfModule .. ': Set PersisetentData parameter name to ' .. name)
   logger_Model.parametersName = name
 end
 Script.serveFunction("CSK_Logger.setParameterName", setParameterName)
 
-local function sendParameters()
+local function sendParameters(noDataSave)
   if logger_Model.persistentModuleAvailable then
     CSK_PersistentData.addParameter(logger_Model.helperFuncs.convertTable2Container(logger_Model.parameters), logger_Model.parametersName)
     CSK_PersistentData.setModuleParameterName(nameOfModule, logger_Model.parametersName, logger_Model.parameterLoadOnReboot)
-    _G.logger:info(nameOfModule .. ": Send Logger parameters with name '" .. logger_Model.parametersName .. "' to CSK_PersistentData module.")
-    CSK_PersistentData.saveData()
+    _G.logger:fine(nameOfModule .. ": Send Logger parameters with name '" .. logger_Model.parametersName .. "' to CSK_PersistentData module.")
+    if not noDataSave then
+      CSK_PersistentData.saveData()
+    end
   else
     _G.logger:warning(nameOfModule .. ": CSK_PersistentData module not available.")
   end
@@ -246,42 +266,47 @@ local function loadParameters()
       logger_Model.parameters = logger_Model.helperFuncs.convertContainer2Table(data)
       logger_Model.setupLogHandler()
       CSK_Logger.pageCalled()
+      return true
     else
       _G.logger:warning(nameOfModule .. ": Loading parameters from CSK_PersistentData module did not work.")
+      return false
     end
   else
     _G.logger:warning(nameOfModule .. ": CSK_PersistentData module not available.")
+    return false
   end
 end
 Script.serveFunction("CSK_Logger.loadParameters", loadParameters)
 
 local function setLoadOnReboot(status)
   logger_Model.parameterLoadOnReboot = status
-  _G.logger:info(nameOfModule .. ": Set new status to load setting on reboot: " .. tostring(status))
+  _G.logger:fine(nameOfModule .. ": Set new status to load setting on reboot: " .. tostring(status))
 end
 Script.serveFunction("CSK_Logger.setLoadOnReboot", setLoadOnReboot)
 
 --- Function to react on initial load of persistent parameters
 local function handleOnInitialDataLoaded()
 
-  _G.logger:info(nameOfModule .. ': Try to initially load parameter from CSK_PersistentData module.')
-  if string.sub(CSK_PersistentData.getVersion(), 1, 1) == '1' then
+  if _G.availableAPIs.default then
+    _G.logger:fine(nameOfModule .. ': Try to initially load parameter from CSK_PersistentData module.')
+    if string.sub(CSK_PersistentData.getVersion(), 1, 1) == '1' then
 
-    _G.logger:warning(nameOfModule .. ': CSK_PersistentData module is too old and will not work. Please update CSK_PersistentData module.')
-    logger_Model.persistentModuleAvailable = false
-  else
+      _G.logger:warning(nameOfModule .. ': CSK_PersistentData module is too old and will not work. Please update CSK_PersistentData module.')
+      logger_Model.persistentModuleAvailable = false
+    else
 
-    local parameterName, loadOnReboot = CSK_PersistentData.getModuleParameterName(nameOfModule)
+      local parameterName, loadOnReboot = CSK_PersistentData.getModuleParameterName(nameOfModule)
 
-    if parameterName then
-      logger_Model.parametersName = parameterName
-      logger_Model.parameterLoadOnReboot = loadOnReboot
+      if parameterName then
+        logger_Model.parametersName = parameterName
+        logger_Model.parameterLoadOnReboot = loadOnReboot
+      end
+
+      if logger_Model.parameterLoadOnReboot then
+        loadParameters()
+      end
+      Script.notifyEvent('Logger_OnDataLoadedOnReboot')
     end
-
-    if logger_Model.parameterLoadOnReboot then
-      loadParameters()
-    end
-    Script.notifyEvent('Logger_OnDataLoadedOnReboot')
   end
 end
 Script.register("CSK_PersistentData.OnInitialDataLoaded", handleOnInitialDataLoaded)

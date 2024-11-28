@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.12">
 <meta name="author" content="SICK AG">
-<title>Documentation - CSK_1stModule_Logger 4.1.0</title>
+<title>Documentation - CSK_1stModule_Logger 4.2.0</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 /* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
@@ -615,11 +615,11 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Documentation - CSK_1stModule_Logger 4.1.0</h1>
+<h1>Documentation - CSK_1stModule_Logger 4.2.0</h1>
 <div class="details">
 <span id="author" class="author">SICK AG</span><br>
-<span id="revnumber">version 4.1.0,</span>
-<span id="revdate">2023-10-23</span>
+<span id="revnumber">version 4.2.0,</span>
+<span id="revdate">2024-07-31</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -638,6 +638,8 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 <li><a href="#_overview">Overview</a></li>
 <li><a href="#_functions">Functions</a>
 <ul class="sectlevel4">
+<li><a href="#API:Function:CSK_Logger.getParameters"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">getParameters()</span></a></li>
+<li><a href="#API:Function:CSK_Logger.getStatusModuleActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">getStatusModuleActive()</span></a></li>
 <li><a href="#API:Function:CSK_Logger.loadParameters"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">loadParameters()</span></a></li>
 <li><a href="#API:Function:CSK_Logger.pageCalled"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">pageCalled()</span></a></li>
 <li><a href="#API:Function:CSK_Logger.reloadLogsInUI"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">reloadLogsInUI()</span></a></li>
@@ -668,8 +670,11 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 <li><a href="#API:Event:CSK_Logger.OnNewStatusAttachedToEngineLogger"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusAttachedToEngineLogger</span></a></li>
 <li><a href="#API:Event:CSK_Logger.OnNewStatusCallbackSink"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusCallbackSink</span></a></li>
 <li><a href="#API:Event:CSK_Logger.OnNewStatusConsoleSink"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusConsoleSink</span></a></li>
+<li><a href="#API:Event:CSK_Logger.OnNewStatusCSKStyle"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusCSKStyle</span></a></li>
 <li><a href="#API:Event:CSK_Logger.OnNewStatusFileSinkActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusFileSinkActive</span></a></li>
 <li><a href="#API:Event:CSK_Logger.OnNewStatusLoadParameterOnReboot"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusLoadParameterOnReboot</span></a></li>
+<li><a href="#API:Event:CSK_Logger.OnNewStatusModuleIsActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusModuleIsActive</span></a></li>
+<li><a href="#API:Event:CSK_Logger.OnNewStatusModuleVersion"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusModuleVersion</span></a></li>
 <li><a href="#API:Event:CSK_Logger.OnPersistentDataModuleAvailable"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnPersistentDataModuleAvailable</span></a></li>
 <li><a href="#API:Event:CSK_Logger.OnUserLevelAdminActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnUserLevelAdminActive</span></a></li>
 <li><a href="#API:Event:CSK_Logger.OnUserLevelMaintenanceActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnUserLevelMaintenanceActive</span></a></li>
@@ -705,11 +710,11 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 </tr>
 <tr>
 <th class="tableblock halign-left valign-top"><p class="tableblock">Version</p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4.1.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4.2.0</p></td>
 </tr>
 <tr>
 <th class="tableblock halign-left valign-top"><p class="tableblock">Date</p></th>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2023-10-23</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2024-07-31</p></td>
 </tr>
 <tr>
 <th class="tableblock halign-left valign-top"><p class="tableblock">Author</p></th>
@@ -753,16 +758,25 @@ h1,h2,h3,h4,h5,h6{color:#007cc1}
 <div class="sect3">
 <h4 id="_short_description_2">Short description</h4>
 <div class="paragraph">
-<p>Module to provide logger functionality to log / store messages of all others CSK modules.<br>
+<p>Module to provide logger functionality to log / store messages of all other CSK modules.<br>
+Check the CSK documentation which explains, how to use this logger by other apps: <a href="https://github.com/SICKAppSpaceCodingStarterKit/.github/blob/main/docu/SICKAppSpaceCodingStarterKit_Documentation.md#structure" class="bare">https://github.com/SICKAppSpaceCodingStarterKit/.github/blob/main/docu/SICKAppSpaceCodingStarterKit_Documentation.md#structure</a><br>
+<br>
 Maybe the name of this module needs to be adapted to run first and also to log messages of the global scopes.<br>
-Check UI of this module for most features available by this module.<br>
-INFO: If using the "FileSink" feature, a SD card should be used to reduce write accesses on the internal flash storage of the device.<br></p>
+Check UI of this module for most available features.<br>
+<br>
+<strong>INFO: If using the "FileSink" feature, a SD card should be used to reduce write accesses on the internal flash storage of the device.</strong></p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_overview">Overview</h4>
 <div class="ulist">
 <ul>
+<li>
+<p><a href="#API:Function:CSK_Logger.getParameters">getParameters()</a></p>
+</li>
+<li>
+<p><a href="#API:Function:CSK_Logger.getStatusModuleActive">getStatusModuleActive()</a></p>
+</li>
 <li>
 <p><a href="#API:Function:CSK_Logger.loadParameters">loadParameters()</a></p>
 </li>
@@ -842,10 +856,19 @@ INFO: If using the "FileSink" feature, a SD card should be used to reduce write 
 <p><a href="#API:Event:CSK_Logger.OnNewStatusConsoleSink">OnNewStatusConsoleSink</a></p>
 </li>
 <li>
+<p><a href="#API:Event:CSK_Logger.OnNewStatusCSKStyle">OnNewStatusCSKStyle</a></p>
+</li>
+<li>
 <p><a href="#API:Event:CSK_Logger.OnNewStatusFileSinkActive">OnNewStatusFileSinkActive</a></p>
 </li>
 <li>
 <p><a href="#API:Event:CSK_Logger.OnNewStatusLoadParameterOnReboot">OnNewStatusLoadParameterOnReboot</a></p>
+</li>
+<li>
+<p><a href="#API:Event:CSK_Logger.OnNewStatusModuleIsActive">OnNewStatusModuleIsActive</a></p>
+</li>
+<li>
+<p><a href="#API:Event:CSK_Logger.OnNewStatusModuleVersion">OnNewStatusModuleVersion</a></p>
 </li>
 <li>
 <p><a href="#API:Event:CSK_Logger.OnPersistentDataModuleAvailable">OnPersistentDataModuleAvailable</a></p>
@@ -868,28 +891,11 @@ INFO: If using the "FileSink" feature, a SD card should be used to reduce write 
 <div class="sect3">
 <h4 id="_functions">Functions</h4>
 <div class="sect4">
-<h5 id="API:Function:CSK_Logger.loadParameters"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">loadParameters()</span></h5>
+<h5 id="API:Function:CSK_Logger.getParameters"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">getParameters()</span></h5>
 <div class="sect5">
 <h6 id="_short_description_3">Short description</h6>
 <div class="paragraph">
-<p>Load parameters for this module from the CSK_PersistentData module if possible and use them.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.loadParameters()</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Function:CSK_Logger.pageCalled"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">pageCalled()</span></h5>
-<div class="sect5">
-<h6 id="_short_description_4">Short description</h6>
-<div class="paragraph">
-<p>Function to register "OnResume" of the module UI (only as helper function).</p>
+<p>Function to get all parameters of the client in JSON format.</p>
 </div>
 </div>
 <div class="sect5">
@@ -911,67 +917,33 @@ INFO: If using the "FileSink" feature, a SD card should be used to reduce write 
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">empty</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jsonParameters</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Empty string (only needed to simplify binding).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JSON string with all parameters.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_2">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">empty = CSK_Logger.pageCalled()</code></pre>
+<pre class="CodeRay highlight"><code data-lang="lua">jsonParameters = CSK_Logger.getParameters()</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Function:CSK_Logger.reloadLogsInUI"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">reloadLogsInUI()</span></h5>
+<h5 id="API:Function:CSK_Logger.getStatusModuleActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">getStatusModuleActive()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_5">Short description</h6>
+<h6 id="_short_description_4">Short description</h6>
 <div class="paragraph">
-<p>Function to reload logfile to show in UI.</p>
+<p>Function to get status if module is active.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_3">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.reloadLogsInUI()</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Function:CSK_Logger.sendParameters"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">sendParameters()</span></h5>
-<div class="sect5">
-<h6 id="_short_description_6">Short description</h6>
-<div class="paragraph">
-<p>Send parameters to CSK_PersistentData module if possible to save them.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_4">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.sendParameters()</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Function:CSK_Logger.setAttachToEngineLogger"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setAttachToEngineLogger()</span></h5>
-<div class="sect5">
-<h6 id="_short_description_7">Short description</h6>
-<div class="paragraph">
-<p>Set status if logger should attach to engine logger.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_parameters">Parameters</h6>
+<h6 id="_return_values_2">Return values</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -998,24 +970,24 @@ INFO: If using the "FileSink" feature, a SD card should be used to reduce write 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_5">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_2">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setAttachToEngineLogger(status)</code></pre>
+<pre class="CodeRay highlight"><code data-lang="lua">status = CSK_Logger.getStatusModuleActive()</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Function:CSK_Logger.setCallbackSinkActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setCallbackSinkActive()</span></h5>
+<h5 id="API:Function:CSK_Logger.loadParameters"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">loadParameters()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_8">Short description</h6>
+<h6 id="_short_description_5">Short description</h6>
 <div class="paragraph">
-<p>Function to configure if internal callback sink should be used to process incoming log messages.</p>
+<p>Load parameters for this module from the CSK_PersistentData module if possible and use them.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_2">Parameters</h6>
+<h6 id="_return_values_3">Return values</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1033,11 +1005,115 @@ INFO: If using the "FileSink" feature, a SD card should be used to reduce write 
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">success</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Is TRUE per default to process incoming log messages.<br>
-It can make sense to set it to FALSE if e.g. "FileSink" is active as this will reduce the internal needed processing load to only focus on the FileSink, but then no log messages will be forwarded via "OnNewMessage"-event or shown in UI by this module.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Success to load parameters.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_3">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">success = CSK_Logger.loadParameters()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_Logger.pageCalled"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">pageCalled()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_6">Short description</h6>
+<div class="paragraph">
+<p>Function to register "OnResume" of the module UI (only as helper function).</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_return_values_4">Return values</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">empty</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Empty string (only needed to simplify binding).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_4">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">empty = CSK_Logger.pageCalled()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_Logger.reloadLogsInUI"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">reloadLogsInUI()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_7">Short description</h6>
+<div class="paragraph">
+<p>Function to reload logfile to show in UI.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_5">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.reloadLogsInUI()</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_Logger.sendParameters"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">sendParameters()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_8">Short description</h6>
+<div class="paragraph">
+<p>Send parameters to CSK_PersistentData module if possible to save them.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_parameters">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">noDataSave</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">?</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[Optional] Set to TRUE if the data should NOT be saved immediately after sending.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1046,21 +1122,21 @@ It can make sense to set it to FALSE if e.g. "FileSink" is active as this will r
 <h6 id="_sample_auto_generated_6">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setCallbackSinkActive(status)</code></pre>
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.sendParameters(noDataSave)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Function:CSK_Logger.setConsoleSinkEnabled"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setConsoleSinkEnabled()</span></h5>
+<h5 id="API:Function:CSK_Logger.setAttachToEngineLogger"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setAttachToEngineLogger()</span></h5>
 <div class="sect5">
 <h6 id="_short_description_9">Short description</h6>
 <div class="paragraph">
-<p>Set status of console sink.</p>
+<p>Set status if logger should attach to engine logger.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_3">Parameters</h6>
+<h6 id="_parameters_2">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1090,21 +1166,21 @@ It can make sense to set it to FALSE if e.g. "FileSink" is active as this will r
 <h6 id="_sample_auto_generated_7">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setConsoleSinkEnabled(status)</code></pre>
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setAttachToEngineLogger(status)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Function:CSK_Logger.setFileName"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setFileName()</span></h5>
+<h5 id="API:Function:CSK_Logger.setCallbackSinkActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setCallbackSinkActive()</span></h5>
 <div class="sect5">
 <h6 id="_short_description_10">Short description</h6>
 <div class="paragraph">
-<p>Set name of the logging file.</p>
+<p>Function to configure if internal callback sink should be used to process incoming log messages.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_4">Parameters</h6>
+<h6 id="_parameters_3">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1122,10 +1198,11 @@ It can make sense to set it to FALSE if e.g. "FileSink" is active as this will r
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Filename</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is TRUE per default to process incoming log messages.<br>
+It can make sense to set it to FALSE if e.g. "FileSink" is active as this will reduce the internal needed processing load to only focus on the FileSink, but then no log messages will be forwarded via "OnNewMessage"-event or shown in UI by this module.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1134,65 +1211,21 @@ It can make sense to set it to FALSE if e.g. "FileSink" is active as this will r
 <h6 id="_sample_auto_generated_8">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setFileName(name)</code></pre>
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setCallbackSinkActive(status)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Function:CSK_Logger.setFilePath"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setFilePath()</span></h5>
+<h5 id="API:Function:CSK_Logger.setConsoleSinkEnabled"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setConsoleSinkEnabled()</span></h5>
 <div class="sect5">
 <h6 id="_short_description_11">Short description</h6>
 <div class="paragraph">
-<p>Set path of the logging file.</p>
+<p>Set status of console sink.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_5">Parameters</h6>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 12.5%;">
-<col style="width: 37.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Multiplicity</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">path</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Filepath</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect5">
-<h6 id="_sample_auto_generated_9">Sample (auto-generated)</h6>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setFilePath(path)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect4">
-<h5 id="API:Function:CSK_Logger.setFileSinkActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setFileSinkActive()</span></h5>
-<div class="sect5">
-<h6 id="_short_description_12">Short description</h6>
-<div class="paragraph">
-<p>Set status of file sink of the log.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_parameters_6">Parameters</h6>
+<h6 id="_parameters_4">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1219,20 +1252,108 @@ It can make sense to set it to FALSE if e.g. "FileSink" is active as this will r
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_10">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_9">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setFileSinkActive(status)</code></pre>
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setConsoleSinkEnabled(status)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Function:CSK_Logger.setLoadOnReboot"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setLoadOnReboot()</span></h5>
+<h5 id="API:Function:CSK_Logger.setFileName"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setFileName()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_12">Short description</h6>
+<div class="paragraph">
+<p>Set name of the logging file.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_parameters_5">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filename</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_10">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setFileName(name)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_Logger.setFilePath"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setFilePath()</span></h5>
 <div class="sect5">
 <h6 id="_short_description_13">Short description</h6>
 <div class="paragraph">
-<p>Configure if this module should load its saved parameters at app / device boot up.</p>
+<p>Set path of the logging file.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_parameters_6">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">path</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filepath</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_11">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setFilePath(path)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_Logger.setFileSinkActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setFileSinkActive()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_14">Short description</h6>
+<div class="paragraph">
+<p>Set status of file sink of the log.</p>
 </div>
 </div>
 <div class="sect5">
@@ -1263,7 +1384,51 @@ It can make sense to set it to FALSE if e.g. "FileSink" is active as this will r
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_11">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_12">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setFileSinkActive(status)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Function:CSK_Logger.setLoadOnReboot"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setLoadOnReboot()</span></h5>
+<div class="sect5">
+<h6 id="_short_description_15">Short description</h6>
+<div class="paragraph">
+<p>Configure if this module should load its saved parameters at app / device boot up.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_parameters_8">Parameters</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_13">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setLoadOnReboot(status)</code></pre>
@@ -1274,13 +1439,13 @@ It can make sense to set it to FALSE if e.g. "FileSink" is active as this will r
 <div class="sect4">
 <h5 id="API:Function:CSK_Logger.setLogFileSize"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setLogFileSize()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_14">Short description</h6>
+<h6 id="_short_description_16">Short description</h6>
 <div class="paragraph">
 <p>Set size of the log file in bytes before truncating.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_8">Parameters</h6>
+<h6 id="_parameters_9">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1307,7 +1472,7 @@ It can make sense to set it to FALSE if e.g. "FileSink" is active as this will r
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_12">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_14">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setLogFileSize(size)</code></pre>
@@ -1318,13 +1483,13 @@ It can make sense to set it to FALSE if e.g. "FileSink" is active as this will r
 <div class="sect4">
 <h5 id="API:Function:CSK_Logger.setLogLevel"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setLogLevel()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_15">Short description</h6>
+<h6 id="_short_description_17">Short description</h6>
 <div class="paragraph">
 <p>Set log level.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_9">Parameters</h6>
+<h6 id="_parameters_10">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1352,7 +1517,7 @@ It can make sense to set it to FALSE if e.g. "FileSink" is active as this will r
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_13">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_15">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setLogLevel(level)</code></pre>
@@ -1363,13 +1528,13 @@ It can make sense to set it to FALSE if e.g. "FileSink" is active as this will r
 <div class="sect4">
 <h5 id="API:Function:CSK_Logger.setParameterName"><span class="breadcrumb">CSK_Logger.</span><span class="api-function">setParameterName()</span></h5>
 <div class="sect5">
-<h6 id="_short_description_16">Short description</h6>
+<h6 id="_short_description_18">Short description</h6>
 <div class="paragraph">
 <p>Function to set the name of the parameters if saved/loaded via the CSK_PersistentData module.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_parameters_10">Parameters</h6>
+<h6 id="_parameters_11">Parameters</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1396,7 +1561,7 @@ It can make sense to set it to FALSE if e.g. "FileSink" is active as this will r
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_14">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_16">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua">CSK_Logger.setParameterName(name)</code></pre>
@@ -1410,13 +1575,13 @@ It can make sense to set it to FALSE if e.g. "FileSink" is active as this will r
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnDataLoadedOnReboot"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnDataLoadedOnReboot</span></h5>
 <div class="sect5">
-<h6 id="_short_description_17">Short description</h6>
+<h6 id="_short_description_19">Short description</h6>
 <div class="paragraph">
 <p>Event to call if module tried to load parameters and should be ready.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_15">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_17">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnDataLoadedOnReboot</span>()
@@ -1431,7 +1596,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnNewCompleteLogfile"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewCompleteLogfile</span></h5>
 <div class="sect5">
-<h6 id="_short_description_18">Short description</h6>
+<h6 id="_short_description_20">Short description</h6>
 <div class="paragraph">
 <p>Notify all available log messages once.</p>
 </div>
@@ -1464,7 +1629,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_16">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_18">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewCompleteLogfile</span>(logfile)
@@ -1479,7 +1644,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnNewFilename"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewFilename</span></h5>
 <div class="sect5">
-<h6 id="_short_description_19">Short description</h6>
+<h6 id="_short_description_21">Short description</h6>
 <div class="paragraph">
 <p>Notify file name of the logging file.</p>
 </div>
@@ -1512,7 +1677,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_17">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_19">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewFilename</span>(filename)
@@ -1527,7 +1692,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnNewFilepath"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewFilepath</span></h5>
 <div class="sect5">
-<h6 id="_short_description_20">Short description</h6>
+<h6 id="_short_description_22">Short description</h6>
 <div class="paragraph">
 <p>Notify path of the logging file.</p>
 </div>
@@ -1560,7 +1725,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_18">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_20">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewFilepath</span>(filepath)
@@ -1575,7 +1740,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnNewFullFilePath"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewFullFilePath</span></h5>
 <div class="sect5">
-<h6 id="_short_description_21">Short description</h6>
+<h6 id="_short_description_23">Short description</h6>
 <div class="paragraph">
 <p>Notify full path of the logging file (path + name).</p>
 </div>
@@ -1608,7 +1773,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_19">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_21">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewFullFilePath</span>(filepath)
@@ -1623,7 +1788,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnNewLogfileSize"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewLogfileSize</span></h5>
 <div class="sect5">
-<h6 id="_short_description_22">Short description</h6>
+<h6 id="_short_description_24">Short description</h6>
 <div class="paragraph">
 <p>Notify max size of ligfile in bytes.</p>
 </div>
@@ -1656,7 +1821,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_20">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_22">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewLogfileSize</span>(size)
@@ -1671,7 +1836,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnNewLogLevel"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewLogLevel</span></h5>
 <div class="sect5">
-<h6 id="_short_description_23">Short description</h6>
+<h6 id="_short_description_25">Short description</h6>
 <div class="paragraph">
 <p>Notify log level to use.</p>
 </div>
@@ -1704,7 +1869,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_21">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_23">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewLogLevel</span>(level)
@@ -1719,7 +1884,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnNewMessage"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewMessage</span></h5>
 <div class="sect5">
-<h6 id="_short_description_24">Short description</h6>
+<h6 id="_short_description_26">Short description</h6>
 <div class="paragraph">
 <p>Notify latest received logging message.</p>
 </div>
@@ -1752,7 +1917,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_22">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_24">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewMessage</span>(message)
@@ -1767,7 +1932,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnNewParameterName"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewParameterName</span></h5>
 <div class="sect5">
-<h6 id="_short_description_25">Short description</h6>
+<h6 id="_short_description_27">Short description</h6>
 <div class="paragraph">
 <p>Notify name of persistent data parameter.</p>
 </div>
@@ -1800,7 +1965,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_23">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_25">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewParameterName</span>(name)
@@ -1815,7 +1980,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnNewStatusAttachedToEngineLogger"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusAttachedToEngineLogger</span></h5>
 <div class="sect5">
-<h6 id="_short_description_26">Short description</h6>
+<h6 id="_short_description_28">Short description</h6>
 <div class="paragraph">
 <p>Notify status to attach logger to engine logger.</p>
 </div>
@@ -1848,7 +2013,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_24">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_26">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusAttachedToEngineLogger</span>(status)
@@ -1863,7 +2028,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnNewStatusCallbackSink"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusCallbackSink</span></h5>
 <div class="sect5">
-<h6 id="_short_description_27">Short description</h6>
+<h6 id="_short_description_29">Short description</h6>
 <div class="paragraph">
 <p>Notify status if the internal callbackSink for log messages is active.</p>
 </div>
@@ -1896,7 +2061,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_25">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_27">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusCallbackSink</span>(status)
@@ -1911,7 +2076,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnNewStatusConsoleSink"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusConsoleSink</span></h5>
 <div class="sect5">
-<h6 id="_short_description_28">Short description</h6>
+<h6 id="_short_description_30">Short description</h6>
 <div class="paragraph">
 <p>Notify status of console sink.</p>
 </div>
@@ -1944,7 +2109,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_26">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_28">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusConsoleSink</span>(status)
@@ -1957,11 +2122,11 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_Logger.OnNewStatusFileSinkActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusFileSinkActive</span></h5>
+<h5 id="API:Event:CSK_Logger.OnNewStatusCSKStyle"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusCSKStyle</span></h5>
 <div class="sect5">
-<h6 id="_short_description_29">Short description</h6>
+<h6 id="_short_description_31">Short description</h6>
 <div class="paragraph">
-<p>Notify status of file sink.</p>
+<p>Notify UI style to use for CSK modules.</p>
 </div>
 </div>
 <div class="sect5">
@@ -1983,33 +2148,33 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">theme</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UI style</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_27">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_29">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusFileSinkActive</span>(status)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusCSKStyle</span>(theme)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_Logger.OnNewStatusFileSinkActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusFileSinkActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_Logger.OnNewStatusCSKStyle</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusCSKStyle</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_Logger.OnNewStatusLoadParameterOnReboot"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusLoadParameterOnReboot</span></h5>
+<h5 id="API:Event:CSK_Logger.OnNewStatusFileSinkActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusFileSinkActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_30">Short description</h6>
+<h6 id="_short_description_32">Short description</h6>
 <div class="paragraph">
-<p>Notify status if parameters should be loaded on app / device boot up.</p>
+<p>Notify status of file sink.</p>
 </div>
 </div>
 <div class="sect5">
@@ -2040,24 +2205,24 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_28">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_30">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusLoadParameterOnReboot</span>(status)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusFileSinkActive</span>(status)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_Logger.OnNewStatusLoadParameterOnReboot</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusLoadParameterOnReboot</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_Logger.OnNewStatusFileSinkActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusFileSinkActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_Logger.OnPersistentDataModuleAvailable"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnPersistentDataModuleAvailable</span></h5>
+<h5 id="API:Event:CSK_Logger.OnNewStatusLoadParameterOnReboot"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusLoadParameterOnReboot</span></h5>
 <div class="sect5">
-<h6 id="_short_description_31">Short description</h6>
+<h6 id="_short_description_33">Short description</h6>
 <div class="paragraph">
-<p>Notify status if features of CSK_PersistentData module  are available.</p>
+<p>Notify status if parameters should be loaded on app / device boot up.</p>
 </div>
 </div>
 <div class="sect5">
@@ -2088,24 +2253,24 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_29">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_31">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnPersistentDataModuleAvailable</span>(status)
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusLoadParameterOnReboot</span>(status)
   <span class="comment">-- Do something</span>
 <span class="keyword">end</span>
 
-Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_Logger.OnPersistentDataModuleAvailable</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnPersistentDataModuleAvailable</span><span class="delimiter">&quot;</span></span>)</code></pre>
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_Logger.OnNewStatusLoadParameterOnReboot</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusLoadParameterOnReboot</span><span class="delimiter">&quot;</span></span>)</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect4">
-<h5 id="API:Event:CSK_Logger.OnUserLevelAdminActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnUserLevelAdminActive</span></h5>
+<h5 id="API:Event:CSK_Logger.OnNewStatusModuleIsActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusModuleIsActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_32">Short description</h6>
+<h6 id="_short_description_34">Short description</h6>
 <div class="paragraph">
-<p>Status of Admin userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
+<p>Notify if module can be used on device.</p>
 </div>
 </div>
 <div class="sect5">
@@ -2136,7 +2301,151 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_30">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_32">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusModuleIsActive</span>(status)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_Logger.OnNewStatusModuleIsActive</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusModuleIsActive</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_Logger.OnNewStatusModuleVersion"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnNewStatusModuleVersion</span></h5>
+<div class="sect5">
+<h6 id="_short_description_35">Short description</h6>
+<div class="paragraph">
+<p>Notify version of module.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_16">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">version</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STRING</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Version</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_33">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnNewStatusModuleVersion</span>(version)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_Logger.OnNewStatusModuleVersion</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnNewStatusModuleVersion</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_Logger.OnPersistentDataModuleAvailable"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnPersistentDataModuleAvailable</span></h5>
+<div class="sect5">
+<h6 id="_short_description_36">Short description</h6>
+<div class="paragraph">
+<p>Notify status if features of CSK_PersistentData module  are available.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_17">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_34">Sample (auto-generated)</h6>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnPersistentDataModuleAvailable</span>(status)
+  <span class="comment">-- Do something</span>
+<span class="keyword">end</span>
+
+Script.register(<span class="string"><span class="delimiter">&quot;</span><span class="content">CSK_Logger.OnPersistentDataModuleAvailable</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">handleOnPersistentDataModuleAvailable</span><span class="delimiter">&quot;</span></span>)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="API:Event:CSK_Logger.OnUserLevelAdminActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnUserLevelAdminActive</span></h5>
+<div class="sect5">
+<h6 id="_short_description_37">Short description</h6>
+<div class="paragraph">
+<p>Status of Admin userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_callback_arguments_18">Callback arguments</h6>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Multiplicity</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">status</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BOOL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect5">
+<h6 id="_sample_auto_generated_35">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelAdminActive</span>(status)
@@ -2151,13 +2460,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnUserLevelMaintenanceActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnUserLevelMaintenanceActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_33">Short description</h6>
+<h6 id="_short_description_38">Short description</h6>
 <div class="paragraph">
 <p>Status of Maintenance userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_16">Callback arguments</h6>
+<h6 id="_callback_arguments_19">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2184,7 +2493,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_31">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_36">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelMaintenanceActive</span>(status)
@@ -2199,13 +2508,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnUserLevelOperatorActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnUserLevelOperatorActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_34">Short description</h6>
+<h6 id="_short_description_39">Short description</h6>
 <div class="paragraph">
 <p>Status of Operator userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_17">Callback arguments</h6>
+<h6 id="_callback_arguments_20">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2232,7 +2541,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_32">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_37">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelOperatorActive</span>(status)
@@ -2247,13 +2556,13 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 <div class="sect4">
 <h5 id="API:Event:CSK_Logger.OnUserLevelServiceActive"><span class="breadcrumb">CSK_Logger.</span><span class="api-event">OnUserLevelServiceActive</span></h5>
 <div class="sect5">
-<h6 id="_short_description_35">Short description</h6>
+<h6 id="_short_description_40">Short description</h6>
 <div class="paragraph">
 <p>Status of Service userlevel. Used internally in combination with the CSK_UserManagement module if available.</p>
 </div>
 </div>
 <div class="sect5">
-<h6 id="_callback_arguments_18">Callback arguments</h6>
+<h6 id="_callback_arguments_21">Callback arguments</h6>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2280,7 +2589,7 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </table>
 </div>
 <div class="sect5">
-<h6 id="_sample_auto_generated_33">Sample (auto-generated)</h6>
+<h6 id="_sample_auto_generated_38">Sample (auto-generated)</h6>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="lua"><span class="keyword">function</span> <span class="function">handleOnUserLevelServiceActive</span>(status)
@@ -2381,8 +2690,8 @@ Script.register(<span class="string"><span class="delimiter">&quot;</span><span 
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 4.1.0<br>
-Last updated 2023-10-23 12:51:29 +0200
+Version 4.2.0<br>
+Last updated 2024-07-31 16:11:45 +0200
 </div>
 </div>
 <script type="text/javascript">
