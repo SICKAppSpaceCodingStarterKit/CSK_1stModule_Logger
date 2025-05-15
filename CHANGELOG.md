@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Legacy bindings of ValueDisplay elements within UI did not work if deployed with VS Code AppSpace SDK
 - UI differs if deployed via Appstudio or VS Code AppSpace SDK
 - Fullscreen icon of iFrame was visible
+- Status change of "Internal log handling" was not logged
 
 ## Release 4.2.0
 
