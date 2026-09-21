@@ -38,18 +38,17 @@
                                                         style="align-items: stretch; flex-grow: 2">
                                                         <davinci-text-field id="TF_ParameterName" type="text"
                                                             title="Name of the parameters within the CSK_PersistentData module to be uses for this module.">
-                                                            <crown-edpws-binding property="value"
-                                                                name="CSK_Logger/OnNewParameterName" update-on-resume>
-                                                            </crown-edpws-binding>
-                                                            <crown-binding event="change"
-                                                                name="CSK_Logger/setParameterName"
-                                                                path="param/args/name" auto-commit>
-                                                            </crown-binding>
-                                                            <crown-edpws-binding property="disabled"
-                                                                name="CSK_Logger/OnPersistentDataModuleAvailable"
-                                                                update-on-resume
+                                                            <crown-on property="value"
+                                                                crown-event="CSK_Logger/OnNewParameterName">
+                                                            </crown-on>
+                                                            <crown-set event="change"
+                                                                crown-function="CSK_Logger/setParameterName"
+                                                                protocol="crownMSGPACK" crown-path="name">
+                                                            </crown-set>
+                                                            <crown-on property="disabled"
+                                                                crown-event="CSK_Logger/OnPersistentDataModuleAvailable"
                                                                 converter="function(value) {return !value;}">
-                                                            </crown-edpws-binding>
+                                                            </crown-on>
                                                         </davinci-text-field>
                                                     </layout-column>
                                                     <layout-column id="Column_PersistentData"
@@ -67,15 +66,14 @@
                                                                         <davinci-icon icon="action/history">
                                                                         </davinci-icon>
                                                                         <span></span>
-                                                                        <crown-binding event="submit"
-                                                                            name="CSK_Logger/loadParameters"
-                                                                            auto-commit>
-                                                                        </crown-binding>
-                                                                        <crown-edpws-binding property="disabled"
-                                                                            name="CSK_Logger/OnPersistentDataModuleAvailable"
-                                                                            update-on-resume
+                                                                        <crown-set event="submit"
+                                                                            crown-function="CSK_Logger/loadParameters"
+                                                                            protocol="crownMSGPACK">
+                                                                        </crown-set>
+                                                                        <crown-on property="disabled"
+                                                                            crown-event="CSK_Logger/OnPersistentDataModuleAvailable"
                                                                             converter="function(value) {return !value;}">
-                                                                        </crown-edpws-binding>
+                                                                        </crown-on>
                                                                     </davinci-button>
                                                                     <davinci-button id="B_SaveConfig"
                                                                         class="myCustomButton_CSK_Module_Logger"
@@ -84,15 +82,14 @@
                                                                         <davinci-icon icon="content/save">
                                                                         </davinci-icon>
                                                                         <span></span>
-                                                                        <crown-binding event="submit"
-                                                                            name="CSK_Logger/sendParameters"
-                                                                            auto-commit>
-                                                                        </crown-binding>
-                                                                        <crown-edpws-binding property="disabled"
-                                                                            name="CSK_Logger/OnPersistentDataModuleAvailable"
-                                                                            update-on-resume
+                                                                        <crown-set event="submit"
+                                                                            crown-function="CSK_Logger/sendParameters"
+                                                                            protocol="crownMSGPACK">
+                                                                        </crown-set>
+                                                                        <crown-on property="disabled"
+                                                                            crown-event="CSK_Logger/OnPersistentDataModuleAvailable"
                                                                             converter="function(value) {return !value;}">
-                                                                        </crown-edpws-binding>
+                                                                        </crown-on>
                                                                     </davinci-button>
                                                                 </layout-row>
                                                             </layout-column>
@@ -125,22 +122,18 @@
                                                                                 <davinci-checkbox id="CB_LoadConfig"
                                                                                     title="Load configured parameters from CSK_PersistentData on app start.">
                                                                                     <span></span>
-                                                                                    <crown-edpws-binding
-                                                                                        property="checked"
-                                                                                        name="CSK_Logger/OnNewStatusLoadParameterOnReboot"
-                                                                                        update-on-resume>
-                                                                                    </crown-edpws-binding>
-                                                                                    <crown-edpws-binding
-                                                                                        property="disabled"
-                                                                                        name="CSK_Logger/OnPersistentDataModuleAvailable"
-                                                                                        update-on-resume
+                                                                                    <crown-on property="checked"
+                                                                                        crown-event="CSK_Logger/OnNewStatusLoadParameterOnReboot">
+                                                                                    </crown-on>
+                                                                                    <crown-on property="disabled"
+                                                                                        crown-event="CSK_Logger/OnPersistentDataModuleAvailable"
                                                                                         converter="function(value) {return !value;}">
-                                                                                    </crown-edpws-binding>
-                                                                                    <crown-binding event="change"
-                                                                                        name="CSK_Logger/setLoadOnReboot"
-                                                                                        path="param/args/status"
-                                                                                        auto-commit>
-                                                                                    </crown-binding>
+                                                                                    </crown-on>
+                                                                                    <crown-set event="change"
+                                                                                        crown-function="CSK_Logger/setLoadOnReboot"
+                                                                                        protocol="crownMSGPACK"
+                                                                                        crown-path="status">
+                                                                                    </crown-set>
                                                                                 </davinci-checkbox>
                                                                             </layout-row>
                                                                         </layout-column>
@@ -251,12 +244,13 @@
                                                         <davinci-option id="Option3" value="OFF">
                                                             <span>OFF</span>
                                                         </davinci-option>
-                                                        <crown-edpws-binding property="value"
-                                                            name="CSK_Logger/OnNewLogLevel" update-on-resume>
-                                                        </crown-edpws-binding>
-                                                        <crown-binding event="change" name="CSK_Logger/setLogLevel"
-                                                            path="param/args/level" auto-commit>
-                                                        </crown-binding>
+                                                        <crown-on property="value"
+                                                            crown-event="CSK_Logger/OnNewLogLevel">
+                                                        </crown-on>
+                                                        <crown-set event="change"
+                                                            crown-function="CSK_Logger/setLogLevel"
+                                                            protocol="crownMSGPACK" crown-path="level">
+                                                        </crown-set>
                                                     </davinci-drop-down>
                                                 </layout-column>
                                                 <layout-column id="ColumnLayout5"
@@ -264,13 +258,13 @@
                                                     <davinci-toggle-switch id="TS_ConsoleSink"
                                                         title="Enables/disables forwarding to AppStudio console."
                                                         style="align-self: center">
-                                                        <crown-edpws-binding property="checked"
-                                                            name="CSK_Logger/OnNewStatusConsoleSink" update-on-resume>
-                                                        </crown-edpws-binding>
-                                                        <crown-binding event="change"
-                                                            name="CSK_Logger/setConsoleSinkEnabled"
-                                                            path="param/args/status" auto-commit>
-                                                        </crown-binding>
+                                                        <crown-on property="checked"
+                                                            crown-event="CSK_Logger/OnNewStatusConsoleSink">
+                                                        </crown-on>
+                                                        <crown-set event="change"
+                                                            crown-function="CSK_Logger/setConsoleSinkEnabled"
+                                                            protocol="crownMSGPACK" crown-path="status">
+                                                        </crown-set>
                                                     </davinci-toggle-switch>
                                                 </layout-column>
                                                 <layout-column id="ColumnLayout7"
@@ -278,14 +272,13 @@
                                                     <davinci-toggle-switch id="TS_EngineLogger"
                                                         title="Attach to the engine logger to log internal engine messages."
                                                         style="align-self: center">
-                                                        <crown-edpws-binding property="checked"
-                                                            name="CSK_Logger/OnNewStatusAttachedToEngineLogger"
-                                                            update-on-resume>
-                                                        </crown-edpws-binding>
-                                                        <crown-binding event="change"
-                                                            name="CSK_Logger/setAttachToEngineLogger"
-                                                            path="param/args/status" auto-commit>
-                                                        </crown-binding>
+                                                        <crown-on property="checked"
+                                                            crown-event="CSK_Logger/OnNewStatusAttachedToEngineLogger">
+                                                        </crown-on>
+                                                        <crown-set event="change"
+                                                            crown-function="CSK_Logger/setAttachToEngineLogger"
+                                                            protocol="crownMSGPACK" crown-path="status">
+                                                        </crown-set>
                                                     </davinci-toggle-switch>
                                                 </layout-column>
                                                 <layout-column id="ColumnLayout16"
@@ -293,13 +286,13 @@
                                                     <davinci-toggle-switch id="TS_CallbackSink"
                                                         title="Process incoming log messages. It can make sense to set it to FALSE if e.g. 'FileSink' is active as this will reduce the internal needed processing load to only focus on the FileSink, but then no log messages will be forwarded via 'OnNewMessage'-event or shown in UI by this module."
                                                         style="align-self: center">
-                                                        <crown-edpws-binding property="checked"
-                                                            name="CSK_Logger/OnNewStatusCallbackSink" update-on-resume>
-                                                        </crown-edpws-binding>
-                                                        <crown-binding event="change"
-                                                            name="CSK_Logger/setCallbackSinkActive"
-                                                            path="param/args/status" auto-commit>
-                                                        </crown-binding>
+                                                        <crown-on property="checked"
+                                                            crown-event="CSK_Logger/OnNewStatusCallbackSink">
+                                                        </crown-on>
+                                                        <crown-set event="change"
+                                                            crown-function="CSK_Logger/setCallbackSinkActive"
+                                                            protocol="crownMSGPACK" crown-path="status">
+                                                        </crown-set>
                                                     </davinci-toggle-switch>
                                                 </layout-column>
                                                 <layout-column id="ColumnLayout6"
@@ -307,36 +300,37 @@
                                                     <davinci-toggle-switch id="TS_FileSink"
                                                         title="Store log messages within configured file."
                                                         style="align-self: center">
-                                                        <crown-edpws-binding property="checked"
-                                                            name="CSK_Logger/OnNewStatusFileSinkActive"
-                                                            update-on-resume>
-                                                        </crown-edpws-binding>
-                                                        <crown-binding event="change"
-                                                            name="CSK_Logger/setFileSinkActive" path="param/args/status"
-                                                            auto-commit>
-                                                        </crown-binding>
+                                                        <crown-on property="checked"
+                                                            crown-event="CSK_Logger/OnNewStatusFileSinkActive">
+                                                        </crown-on>
+                                                        <crown-set event="change"
+                                                            crown-function="CSK_Logger/setFileSinkActive"
+                                                            protocol="crownMSGPACK" crown-path="status">
+                                                        </crown-set>
                                                     </davinci-toggle-switch>
                                                 </layout-column>
                                                 <layout-column id="ColumnLayout11" style="align-items: stretch">
                                                     <davinci-text-field id="TF_Filepath" type="text"
                                                         title="Path of the logging file.">
-                                                        <crown-edpws-binding property="value"
-                                                            name="CSK_Logger/OnNewFilepath" update-on-resume>
-                                                        </crown-edpws-binding>
-                                                        <crown-binding event="change" name="CSK_Logger/setFilePath"
-                                                            path="param/args/path" auto-commit>
-                                                        </crown-binding>
+                                                        <crown-on property="value"
+                                                            crown-event="CSK_Logger/OnNewFilepath">
+                                                        </crown-on>
+                                                        <crown-set event="change"
+                                                            crown-function="CSK_Logger/setFilePath"
+                                                            protocol="crownMSGPACK" crown-path="path">
+                                                        </crown-set>
                                                     </davinci-text-field>
                                                 </layout-column>
                                                 <layout-column id="ColumnLayout13" style="align-items: stretch">
                                                     <davinci-text-field id="TF_Filename" type="text"
                                                         title="Name of the log file to store log messages.">
-                                                        <crown-edpws-binding property="value"
-                                                            name="CSK_Logger/OnNewFilename" update-on-resume>
-                                                        </crown-edpws-binding>
-                                                        <crown-binding event="change" name="CSK_Logger/setFileName"
-                                                            path="param/args/name" auto-commit>
-                                                        </crown-binding>
+                                                        <crown-on property="value"
+                                                            crown-event="CSK_Logger/OnNewFilename">
+                                                        </crown-on>
+                                                        <crown-set event="change"
+                                                            crown-function="CSK_Logger/setFileName"
+                                                            protocol="crownMSGPACK" crown-path="name">
+                                                        </crown-set>
                                                     </davinci-text-field>
                                                 </layout-column>
                                                 <layout-column id="ColumnLayout12" style="align-items: stretch">
@@ -345,12 +339,13 @@
                                                         decimal-separator="." format-pattern="0"
                                                         title="Maximum size of the log file in bytes before truncating. Has to be in the range [1024,104857600] bytes."
                                                         style="flex-grow: 1">
-                                                        <crown-edpws-binding property="value"
-                                                            name="CSK_Logger/OnNewLogfileSize" update-on-resume>
-                                                        </crown-edpws-binding>
-                                                        <crown-binding event="change" name="CSK_Logger/setLogFileSize"
-                                                            path="param/args/size" auto-commit>
-                                                        </crown-binding>
+                                                        <crown-on property="value"
+                                                            crown-event="CSK_Logger/OnNewLogfileSize">
+                                                        </crown-on>
+                                                        <crown-set event="change"
+                                                            crown-function="CSK_Logger/setLogFileSize"
+                                                            protocol="crownMSGPACK" crown-path="size">
+                                                        </crown-set>
                                                     </davinci-numeric-field>
                                                 </layout-column>
                                             </layout-row>
@@ -415,9 +410,10 @@
                                                         <davinci-icon icon="navigation/refresh">
                                                         </davinci-icon>
                                                         <span></span>
-                                                        <crown-binding event="submit" name="CSK_Logger/reloadLogsInUI"
-                                                            auto-commit>
-                                                        </crown-binding>
+                                                        <crown-set event="submit"
+                                                            crown-function="CSK_Logger/reloadLogsInUI"
+                                                            protocol="crownMSGPACK">
+                                                        </crown-set>
                                                     </davinci-button>
                                                 </layout-row>
                                             </stacked-pane>
@@ -425,10 +421,10 @@
                                                 <layout-row id="RowLayout18" class="myMargin20px0_CSK_Module_Logger">
                                                 </layout-row>
                                             </stacked-pane>
-                                            <crown-edpws-binding property="value"
-                                                name="CSK_Logger/OnNewStatusFileSinkActive" update-on-resume
+                                            <crown-on property="value"
+                                                crown-event="CSK_Logger/OnNewStatusFileSinkActive"
                                                 converter="function(value) {return value.toString();}">
-                                            </crown-edpws-binding>
+                                            </crown-on>
                                         </stacked-view>
                                     </layout-column>
                                 </layout-row>
@@ -440,9 +436,9 @@
                             <span>Login via UserManagement to see setup options.</span>
                         </davinci-callout>
                     </stacked-pane>
-                    <crown-edpws-binding property="value" name="CSK_Logger/OnUserLevelMaintenanceActive"
-                        update-on-resume converter="function(value) {return value.toString();}">
-                    </crown-edpws-binding>
+                    <crown-on property="value" crown-event="CSK_Logger/OnUserLevelMaintenanceActive"
+                        converter="function(value) {return value.toString();}">
+                    </crown-on>
                 </stacked-view>
             </stacked-pane>
             <stacked-pane id="SP_NoSupport" value="false">
@@ -456,17 +452,16 @@
                     </layout-column>
                 </layout-row>
             </stacked-pane>
-            <crown-edpws-binding property="value" name="CSK_Logger/OnNewStatusModuleIsActive" update-on-resume
+            <crown-on property="value" crown-event="CSK_Logger/OnNewStatusModuleIsActive"
                 converter="function(value) {return value.toString();}">
-            </crown-edpws-binding>
+            </crown-on>
         </stacked-view>
         <stacked-view id="SV_PageCalled">
-            <crown-binding property="value" name="CSK_Logger/pageCalled" path="result/data/empty" auto-update="0"
-                update-on-resume>
-            </crown-binding>
-            <crown-edpws-binding property="value" name="CSK_Logger/OnNewStatusCSKStyle" update-on-resume
-                converter="changeStyle">
-            </crown-edpws-binding>
+            <crown-get property="value" crown-function="CSK_Logger/pageCalled" protocol="crownMSGPACK"
+                crown-path="empty" auto-update-ms="0">
+            </crown-get>
+            <crown-on property="value" crown-event="CSK_Logger/OnNewStatusCSKStyle" converter="changeStyle">
+            </crown-on>
         </stacked-view>
     </layout-column>
 </layout-row>
